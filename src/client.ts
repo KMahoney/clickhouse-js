@@ -42,6 +42,7 @@ export interface ClickHouseClientConfigOptions {
     LoggerClass?: new (enabled: boolean) => Logger
   }
   tls?: BasicTLSOptions | MutualTLSOptions
+  session_id?: string
 }
 
 interface BasicTLSOptions {
@@ -144,6 +145,7 @@ function normalizeConfig(
       enable: loggingEnabled,
       LoggerClass: config.log?.LoggerClass ?? Logger,
     },
+    session_id: config.session_id,
   }
 }
 
@@ -173,6 +175,7 @@ export class ClickHouseClient {
       },
       query_params: params.query_params,
       abort_signal: params.abort_signal,
+      session_id: this.config.session_id,
     }
   }
 
